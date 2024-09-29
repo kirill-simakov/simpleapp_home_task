@@ -10,9 +10,9 @@ jsonschema = "*"
 awscli = "*"
 awscli-local = "*"
 pytest = "*"
-flake8 = "*"
 pytest-mock = "*"
 moto = "*"
+pytest-cov = "*"
 
 [dev-packages]
 

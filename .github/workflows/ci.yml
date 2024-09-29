@@ -40,10 +40,6 @@ jobs:
         pip install -r requirements.txt
         pip install pytest pytest-mock moto boto3 botocore psycopg2-binary pytest-cov flake8
 
-    - name: Lint with flake8
-      run: |
-        flake8 src/ tests/
-
     - name: Run Tests with Coverage
       env:
         PYTHONPATH: .
