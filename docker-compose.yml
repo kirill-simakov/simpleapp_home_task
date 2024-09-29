@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: events_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=s3,sqs,cloudwatch
+      - DEBUG=1
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack_setup.sh:/etc/localstack/init/ready.d/init-aws.sh
+
+  lambda:
+    build: .
+    volumes:
+      - .:/var/task
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=fake_access_key
+      - AWS_SECRET_ACCESS_KEY=fake_secret_key
+      - LOCALSTACK_HOSTNAME=localstack
+      - DB_HOST=postgres
+      - DB_NAME=events_db
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+    depends_on:
+      - postgres
+      - localstack
+    command: ["lambda_function.lambda_handler"]
+
+volumes:
+  postgres_data:
