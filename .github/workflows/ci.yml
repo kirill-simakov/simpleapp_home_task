@@ -42,13 +42,7 @@ jobs:
     - name: Run Tests with Coverage
       env:
         PYTHONPATH: .
-      run: pytest --cov=src --cov-report=html tests/
-
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: htmlcov/
+      run: pytest --cov=src tests/
 
     # Optional: Build Docker Images
     # - name: Build Docker Images
