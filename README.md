@@ -29,7 +29,7 @@ pip install pipenv
 
 ### 1. Clone the Repository
 
-Clone the project repository to your local machine:
+Clone the project repository to your local machine.
 
 ### 2. Install Python Dependencies
 
